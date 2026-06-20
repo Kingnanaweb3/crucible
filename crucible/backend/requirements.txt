@@ -1,0 +1,9 @@
+# --- Crucible backend ---
+openai>=1.40.0            # one OpenAI-compatible client for BOTH Groq and OpenRouter
+pydantic-settings>=2.4.0  # typed env config
+tenacity>=9.0.0           # retry on 429 / transient errors
+python-dotenv>=1.0.1
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+langgraph>=0.2.0
+httpx>=0.27.0

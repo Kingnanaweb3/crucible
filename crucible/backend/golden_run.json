@@ -1,0 +1,129 @@
+{
+  "request": {
+    "patient_id": "P-10293",
+    "patient_name": "Jordan Avery",
+    "procedure_code": "70553",
+    "procedure_name": "MRI brain with and without contrast",
+    "diagnosis_code": "G43.909",
+    "diagnosis": "Migraine, unspecified, not intractable",
+    "referring_provider": "Dr. Lena Park",
+    "plan": "ACME Health PPO"
+  },
+  "parsed": {
+    "patient_id": "P-10293",
+    "procedure_code": "70553",
+    "procedure_name": "MRI brain with and without contrast",
+    "diagnosis_code": "G43.909",
+    "diagnosis": "Migraine, unspecified, not intractable",
+    "referring_provider": "Dr. Lena Park",
+    "missing_fields": []
+  },
+  "determination": {
+    "decision": "approve",
+    "rationale": "The procedure code 70553 requires a documented diagnosis and a referring provider, both of which are present, and the diagnosis code G43.909 is covered under the nervous system prefix G.",
+    "risk_score": 0,
+    "confidence": 1.0
+  },
+  "resolution": {
+    "final_decision": "approve",
+    "escalated": false,
+    "reason": "Auto-finalized as 'approve' (confidence 1.00, risk 0)."
+  },
+  "_trace": [
+    {
+      "step": "intake",
+      "elapsed_ms": 1048,
+      "error": null,
+      "bus_snapshot": {
+        "request": {
+          "patient_id": "P-10293",
+          "patient_name": "Jordan Avery",
+          "procedure_code": "70553",
+          "procedure_name": "MRI brain with and without contrast",
+          "diagnosis_code": "G43.909",
+          "diagnosis": "Migraine, unspecified, not intractable",
+          "referring_provider": "Dr. Lena Park",
+          "plan": "ACME Health PPO"
+        },
+        "parsed": {
+          "patient_id": "P-10293",
+          "procedure_code": "70553",
+          "procedure_name": "MRI brain with and without contrast",
+          "diagnosis_code": "G43.909",
+          "diagnosis": "Migraine, unspecified, not intractable",
+          "referring_provider": "Dr. Lena Park",
+          "missing_fields": []
+        }
+      }
+    },
+    {
+      "step": "review",
+      "elapsed_ms": 416,
+      "error": null,
+      "bus_snapshot": {
+        "request": {
+          "patient_id": "P-10293",
+          "patient_name": "Jordan Avery",
+          "procedure_code": "70553",
+          "procedure_name": "MRI brain with and without contrast",
+          "diagnosis_code": "G43.909",
+          "diagnosis": "Migraine, unspecified, not intractable",
+          "referring_provider": "Dr. Lena Park",
+          "plan": "ACME Health PPO"
+        },
+        "parsed": {
+          "patient_id": "P-10293",
+          "procedure_code": "70553",
+          "procedure_name": "MRI brain with and without contrast",
+          "diagnosis_code": "G43.909",
+          "diagnosis": "Migraine, unspecified, not intractable",
+          "referring_provider": "Dr. Lena Park",
+          "missing_fields": []
+        },
+        "determination": {
+          "decision": "approve",
+          "rationale": "The procedure code 70553 requires a documented diagnosis and a referring provider, both of which are present, and the diagnosis code G43.909 is covered under the nervous system prefix G.",
+          "risk_score": 0,
+          "confidence": 1.0
+        }
+      }
+    },
+    {
+      "step": "resolution",
+      "elapsed_ms": 0,
+      "error": null,
+      "bus_snapshot": {
+        "request": {
+          "patient_id": "P-10293",
+          "patient_name": "Jordan Avery",
+          "procedure_code": "70553",
+          "procedure_name": "MRI brain with and without contrast",
+          "diagnosis_code": "G43.909",
+          "diagnosis": "Migraine, unspecified, not intractable",
+          "referring_provider": "Dr. Lena Park",
+          "plan": "ACME Health PPO"
+        },
+        "parsed": {
+          "patient_id": "P-10293",
+          "procedure_code": "70553",
+          "procedure_name": "MRI brain with and without contrast",
+          "diagnosis_code": "G43.909",
+          "diagnosis": "Migraine, unspecified, not intractable",
+          "referring_provider": "Dr. Lena Park",
+          "missing_fields": []
+        },
+        "determination": {
+          "decision": "approve",
+          "rationale": "The procedure code 70553 requires a documented diagnosis and a referring provider, both of which are present, and the diagnosis code G43.909 is covered under the nervous system prefix G.",
+          "risk_score": 0,
+          "confidence": 1.0
+        },
+        "resolution": {
+          "final_decision": "approve",
+          "escalated": false,
+          "reason": "Auto-finalized as 'approve' (confidence 1.00, risk 0)."
+        }
+      }
+    }
+  ]
+}
