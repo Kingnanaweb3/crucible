@@ -5,7 +5,6 @@
 Crucible injects realistic faults into a *running* system of agents and measures one thing that nothing else does: when something goes wrong inside the workflow, does the system **catch and escalate it**, or does it **silently do the wrong thing** and let it flow downstream?
 
 * **Live API:** https://crucible-production-314a.up.railway.app
-* **Repo:** https://github.com/Kingnanaweb3/crucible
 * **Governance:** resilience tests run as governed executions in **UiPath Test Cloud**
 
 ## The problem
