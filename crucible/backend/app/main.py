@@ -15,6 +15,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
 from app.chaos.faults import FAULTS
+from app.config import settings
 from app.chaos.interceptor import Interceptor, Scenario
 from app.integrations import test_cloud
 from app.integrations.uipath import get_token
@@ -178,7 +179,8 @@ def run(body: RunRequest) -> dict:
             )
             outcome = test_cloud.push_result(token, project_id, test_case_id, report)
             ui_link = (
-                f"https://staging.uipath.com/kingnana/DefaultTenant/testmanager_/"
+                f"{settings.uipath_base_url.rstrip('/')}/{settings.uipath_org}/"
+                f"{settings.uipath_tenant}/testmanager_/"
                 f"projects/{project_id}/testcases/{test_case_id}"
             )
             result["test_cloud"] = {

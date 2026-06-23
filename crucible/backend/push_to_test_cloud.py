@@ -22,6 +22,7 @@ from app.integrations.test_cloud import (  # noqa: E402
     get_project_id,
     push_result,
 )
+from app.config import settings  # noqa: E402
 from app.integrations.uipath import get_token  # noqa: E402
 
 REPORT_PATH = "last_score.json"
@@ -67,7 +68,8 @@ def main() -> None:
     print(f"Test case log id  : {outcome['test_case_log_id']}")
 
     ui_link = (
-        f"https://staging.uipath.com/kingnana/DefaultTenant/testmanager_/"
+        f"{settings.uipath_base_url.rstrip('/')}/{settings.uipath_org}/"
+        f"{settings.uipath_tenant}/testmanager_/"
         f"projects/{project_id}/testcases/{test_case_id}"
     )
     print(f"Test Manager UI   : {ui_link}")
