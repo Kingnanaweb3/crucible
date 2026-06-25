@@ -96,6 +96,7 @@ def _resolve_request(body: RunRequest) -> dict:
 
 def _summary(run_bus: dict) -> dict[str, Any]:
     return {
+        "intake": run_bus.get("parsed"),
         "determination": run_bus.get("determination"),
         "resolution": run_bus.get("resolution"),
     }
