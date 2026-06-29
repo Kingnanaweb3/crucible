@@ -4,9 +4,14 @@
 
 Crucible injects realistic faults into a *running* system of agents and measures one thing that nothing else does: when something goes wrong inside the workflow, does the system **catch and escalate it**, or does it **silently do the wrong thing** and let it flow downstream?
 
-* **Live API:** https://crucible-production-314a.up.railway.app
-* **Governance:** resilience tests run as governed executions in **UiPath Test Cloud**
+**Current scope:** Crucible ships one reference pipeline, a healthcare prior authorization workflow, with a built in sample case. The chaos engine, scorer, and API are workflow independent; native adapters for external agent frameworks are on the roadmap.
 
+* **Live demo (UI):** https://crucible-ui-five.vercel.app/demo
+* **Live API:** https://crucible-production-314a.up.railway.app
+* **Demo video:** https://youtu.be/Ca29cdgSkvs
+* **Orchestration and governance:** resilience runs execute as a UiPath cloud job, with a verdict filed per scenario in Test Manager (Test Cloud)
+
+* 
 ## The problem
 
 AI agents do not fail loudly. They rarely crash. Instead they **confidently produce a wrong answer that looks fine**, and in a workflow of several agents, one agent's output becomes the next agent's trusted input. So a single hallucinated, dropped, or injected value can propagate into a real decision with **no error, no alert, and no human in the loop**.
@@ -184,14 +189,18 @@ The design goal: **bring your workflow, get resilience testing for free.** Fault
 **Honest scope, current state:** today you adapt Crucible by implementing your workflow in its lightweight pipeline format, a few functions. It is **not yet** a drop in adapter that ingests an arbitrary LangChain, CrewAI, or AutoGen graph from config. That is on the roadmap. So think of it as a **reusable resilience framework with a reference workflow**, with native adapters as the next step.
 
 ## UiPath integration
+## UiPath integration
 
-Crucible plugs into the **UiPath Platform** as its governance and execution layer:
+Crucible uses the UiPath Platform as its orchestration and governance layer. The agents under test are plain Python and Groq; UiPath does not run inside them. It orchestrates the resilience runs and governs the results. There are two surfaces.
 
-* **UiPath Test Cloud and Test Manager**: each resilience check is recorded as a test execution. A coded UiPath test case (`CrucibleResilienceGate`) calls Crucible's `/run` endpoint and asserts the resilience score meets a threshold. When a workflow silently corrupts, the score is `0` and the test **fails on purpose**. That failing governed execution *is* the finding.
-* **UiPath for Coding Agents**: the entire UiPath test project was scaffolded, built, packed, and deployed using a coding agent (Claude Code) driving the `uip` CLI, with UiPath becoming the deployment, governance, and runtime layer underneath.
-* **Validate external agents**: because Crucible tests *external* agent workflows from the outside and reports findings into Test Cloud, it maps directly to the Test Cloud track's goal of validating agents built outside UiPath.
+**1. API Workflow: orchestration and governed verdicts.** An API Workflow authored in Studio Web iterates over a set of fault scenarios and, for each one, calls Crucible's live `/run` endpoint with an HTTP Request activity. It is published to Orchestrator and runs as a serverless cloud job. Each scenario result is filed as a verdict in Test Manager, project CRB, so a resilient run lands green and a silent corruption lands red. This is the surface shown in the demo video: the cloud job completes successfully and the verdicts appear in Test Manager.
 
-This means resilience becomes a **release gate**: teams can require "survives chaos" the same way they require "passes functional tests," governed in the same control plane.
+**2. Coded resilience gate: built with UiPath for Coding Agents.** Crucible also ships a UiPath coded test case, `CrucibleResilienceGate`, written in C# against `UiPath.Testing.Activities`. It calls the live `/run` endpoint, reads `resilience_score` and `verdict` from the report, and asserts the score sits within the resilient range of 70 to 100. Under the signature `ai_hallucinate` scenario Crucible returns 0, so the gate fails by design, and that failing test is the governance finding: a case that needed human review was silently auto approved. This project was authored, built, and packaged using UiPath for Coding Agents, with Claude Code driving the `uip` CLI through UiPath's published agent skills.
+
+Together these make resilience a release gate: the same way a team requires "passes functional tests," it can require "survives chaos," expressed as governed UiPath artifacts.
+
+**Honest status.** The API Workflow runs in Orchestrator and files verdicts in Test Manager today. The coded gate is authored, built, and packaged via UiPath for Coding Agents; publishing it to Orchestrator as a governed execution is the next step, not yet completed.
+
 
 ## Tech stack
 
